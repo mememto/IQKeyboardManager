@@ -535,8 +535,6 @@ public extension UIView {
             let doneButton = IQBarButtonItem(title: text, style: UIBarButtonItemStyle.Done, target: target, action: action)
             doneButton.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
             
-            if
-            
             items.append(doneButton)
             
             //  Adding button to toolBar.
