@@ -222,6 +222,11 @@ public class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
     public var toolbarDoneBarButtonItemImage : UIImage?
     
     /**
+     Toobar done button font
+     */
+    public var toolbarDoneBarButtonFont : UIFont?
+    
+    /**
      Toolbar done button text, If nothing is provided then system default 'UIBarButtonSystemItemDone' will be used.
      */
     public var toolbarDoneBarButtonItemText : String?
@@ -1834,7 +1839,7 @@ public class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
                             }
                                 //Supporting Custom Done button text (Enhancement ID: #209, #411, Bug ID: #376)
                             else if let doneBarButtonItemText = toolbarDoneBarButtonItemText {
-                                textField.addRightButtonOnKeyboardWithText(doneBarButtonItemText, target: self, action: #selector(self.doneAction(_:)), shouldShowPlaceholder: shouldShowTextFieldPlaceholder)
+                                textField.addRightButtonOnKeyboardWithText(doneBarButtonItemText, target: self, action: #selector(self.doneAction(_:)), shouldShowPlaceholder: shouldShowTextFieldPlaceholder, font: toolbarDoneBarButtonFont != nil ? toolbarDoneBarButtonFont : UIFont.systemFontOfSize(UIFont.systemFontSize()))
                             } else {
                                 //Now adding textField placeholder text as title of IQToolbar  (Enhancement ID: #27)
                                 textField.addDoneOnKeyboardWithTarget(self, action: #selector(self.doneAction(_:)), shouldShowPlaceholder: shouldShowTextFieldPlaceholder)

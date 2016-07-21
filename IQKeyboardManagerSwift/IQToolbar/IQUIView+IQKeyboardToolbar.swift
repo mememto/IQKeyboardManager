@@ -481,12 +481,68 @@ public extension UIView {
             
             //Right button
             let doneButton = IQBarButtonItem(title: text, style: UIBarButtonItemStyle.Done, target: target, action: action)
+            
+            if
+            
             items.append(doneButton)
             
             //  Adding button to toolBar.
             toolbar.items = items
             toolbar.toolbarTitleInvocation = self.titleInvocation
 
+            //  Setting toolbar to keyboard.
+            if let textField = self as? UITextField {
+                textField.inputAccessoryView = toolbar
+                
+                switch textField.keyboardAppearance {
+                case UIKeyboardAppearance.Dark:
+                    toolbar.barStyle = UIBarStyle.Black
+                default:
+                    toolbar.barStyle = UIBarStyle.Default
+                }
+            } else if let textView = self as? UITextView {
+                textView.inputAccessoryView = toolbar
+                
+                switch textView.keyboardAppearance {
+                case UIKeyboardAppearance.Dark:
+                    toolbar.barStyle = UIBarStyle.Black
+                default:
+                    toolbar.barStyle = UIBarStyle.Default
+                }
+            }
+        }
+    }
+    
+    public func addRightButtonOnKeyboardWithText (text : String, target : AnyObject?, action : Selector, titleText: String?, font: UIFont) {
+        
+        //If can't set InputAccessoryView. Then return
+        if self.respondsToSelector(Selector("setInputAccessoryView:")) {
+            
+            //  Creating a toolBar for phoneNumber keyboard
+            let toolbar = IQToolbar()
+            toolbar.doneTitle = text
+            
+            var items : [UIBarButtonItem] = []
+            
+            //Title button
+            let title = IQTitleBarButtonItem(title: shouldHidePlaceholderText == true ? nil : titleText)
+            items.append(title)
+            
+            //Flexible space
+            items.append(UIView.flexibleBarButtonItem())
+            
+            //Right button
+            let doneButton = IQBarButtonItem(title: text, style: UIBarButtonItemStyle.Done, target: target, action: action)
+            doneButton.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
+            
+            if
+            
+            items.append(doneButton)
+            
+            //  Adding button to toolBar.
+            toolbar.items = items
+            toolbar.toolbarTitleInvocation = self.titleInvocation
+            
             //  Setting toolbar to keyboard.
             if let textField = self as? UITextField {
                 textField.inputAccessoryView = toolbar
@@ -518,15 +574,22 @@ public extension UIView {
     @param action Right button action name. Usually 'doneAction:(IQBarButtonItem*)item'.
     @param shouldShowPlaceholder A boolean to indicate whether to show textField placeholder on IQToolbar'.
     */
-    public func addRightButtonOnKeyboardWithText (text : String, target : AnyObject?, action : Selector, shouldShowPlaceholder: Bool) {
+    public func addRightButtonOnKeyboardWithText (text : String, target : AnyObject?, action : Selector, shouldShowPlaceholder: Bool, font: UIFont?) {
         
         var title : String?
 
         if shouldShowPlaceholder == true {
+            
             title = self.drawingPlaceholderText
         }
         
-        addRightButtonOnKeyboardWithText(text, target: target, action: action, titleText: title)
+        if font != nil {
+            
+            addRightButtonOnKeyboardWithText(text, target: target, action: action, titleText: title, font: font)
+        } else {
+            
+            addRightButtonOnKeyboardWithText(text, target: target, action: action, titleText: title)
+        }
     }
     
 
